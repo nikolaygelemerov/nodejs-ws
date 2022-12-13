@@ -1,4 +1,5 @@
-import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './types';
+import { ITEMS_COUNT } from '../constants';
+import { ClientToServerEvents, ServerToClientEvents } from './types';
 import express from 'express';
 import { Server } from 'socket.io';
 
@@ -10,16 +11,13 @@ const server = app.listen(PORT, () => {
   console.log(`Server is listening on http://localhost:${PORT}`);
 });
 
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
-  server,
-  {
-    cors: {
-      origin: 'http://localhost:8080'
-    }
+const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
+  cors: {
+    origin: 'http://localhost:8080'
   }
-);
+});
 
-const EMIT_INTERVAL = 200; // ms
+const EMIT_INTERVAL = 10; // ms
 
 io.on('connection', (socket) => {
   console.log('Client connected');
@@ -30,7 +28,11 @@ io.on('connection', (socket) => {
     console.log('Start');
 
     intervalId = setInterval(() => {
-      socket.emit('posts', { action: 'create', post: 'Post' });
+      socket.emit('posts', {
+        action: 'update',
+        id: Math.floor(Math.random() * ITEMS_COUNT),
+        post: 'Post'
+      });
     }, EMIT_INTERVAL);
   };
 
