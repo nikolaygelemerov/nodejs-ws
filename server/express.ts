@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './types';
 import express from 'express';
 import { Server } from 'socket.io';
@@ -20,23 +19,28 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEve
   }
 );
 
+const EMIT_INTERVAL = 200; // ms
+
 io.on('connection', (socket) => {
   console.log('Client connected');
 
   let intervalId: NodeJS.Timer | null = null;
 
-  socket.on('start', () => {
+  const onStartListener = () => {
     console.log('Start');
 
     intervalId = setInterval(() => {
       socket.emit('posts', { action: 'create', post: 'Post' });
-      console.log('EMIT');
-    }, 200);
-  });
+    }, EMIT_INTERVAL);
+  };
+
+  socket.on('start', onStartListener);
 
   socket.on('stop', () => {
+    console.log('Stop');
+
     if (intervalId) {
-      socket.off('posts');
+      socket.off('posts', onStartListener);
       clearInterval(intervalId);
     }
   });
