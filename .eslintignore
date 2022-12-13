@@ -1,0 +1,9 @@
+coverage/*
+cypress/*
+dist/*
+instrumented/*
+node_modules/*
+nyc/*
+
+cypress.config.ts
+ontology.ts

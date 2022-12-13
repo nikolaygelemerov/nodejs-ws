@@ -1,0 +1,45 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:compat/recommended",
+    "plugin:prettier/recommended",
+    "plugin:typescript-sort-keys/recommended",
+    "prettier"
+  ],
+  "globals": {},
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "project": ["./tsconfig.json"],
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "sort-destructure-keys",
+    "sort-keys-fix",
+    "typescript-sort-keys",
+    "unused-imports"
+  ],
+  "ignorePatterns": ["dist"],
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+    "max-len": ["warn", { "code": 100 }],
+    "sort-destructure-keys/sort-destructure-keys": [2, { "caseSensitive": false }],
+    "sort-keys-fix/sort-keys-fix": ["error", "asc", { "caseSensitive": false, "natural": false }],
+    "unused-imports/no-unused-imports": "error"
+  }
+}

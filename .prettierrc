@@ -1,0 +1,18 @@
+{
+  "endOfLine": "auto",
+  "importOrder": [],
+  "importOrderCaseInsensitive": true,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "overrides": [
+    {
+      "files": "*.scss",
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ],
+  "printWidth": 100,
+  "singleQuote": true,
+  "trailingComma": "none"
+}
