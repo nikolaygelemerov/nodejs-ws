@@ -1,4 +1,4 @@
-import { SocketPayload } from '../../types';
+import { SocketPayload } from '@types';
 
 export interface ServerToClientEvents {
   posts: (post: SocketPayload) => void;

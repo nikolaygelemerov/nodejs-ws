@@ -1,7 +1,8 @@
-import { ITEMS_COUNT } from '../constants';
 import { ClientToServerEvents, ServerToClientEvents } from './types';
 import express from 'express';
 import { Server } from 'socket.io';
+
+import { ITEMS_COUNT } from '@constants';
 
 const app = express();
 
@@ -17,7 +18,7 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
   }
 });
 
-const EMIT_INTERVAL = 10; // ms
+const EMIT_INTERVAL = 0; // ms
 
 io.on('connection', (socket) => {
   console.log('Client connected');
@@ -27,7 +28,12 @@ io.on('connection', (socket) => {
   const onStartListener = () => {
     console.log('Start');
 
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
     intervalId = setInterval(() => {
+      console.log('EMIITING');
       socket.emit('posts', {
         action: 'update',
         id: Math.floor(Math.random() * ITEMS_COUNT),
@@ -42,6 +48,7 @@ io.on('connection', (socket) => {
     console.log('Stop');
 
     if (intervalId) {
+      console.log('CLEAR');
       socket.off('posts', onStartListener);
       clearInterval(intervalId);
     }

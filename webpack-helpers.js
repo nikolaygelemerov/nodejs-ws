@@ -1,5 +1,10 @@
-// Resolves:
-const alias = {};
+/* eslint-disable @typescript-eslint/no-var-requires */
+const path = require('path');
+
+const alias = {
+  '@constants': path.resolve(__dirname, 'constants'),
+  '@types': path.resolve(__dirname, 'types')
+};
 
 const extensions = ['.ts', '.js'];
 

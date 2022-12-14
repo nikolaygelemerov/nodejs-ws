@@ -42,6 +42,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
+    "module-alias": "^2.2.2",
     "nodemon": "2.0.20",
     "prettier": "^2.8.1",
     "ts-node": "10.9.1",
@@ -49,5 +50,9 @@
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
+  },
+  "_moduleAliases": {
+    "@constants": "./constants",
+    "@types": "./types"
   }
 }

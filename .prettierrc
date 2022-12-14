@@ -1,6 +1,6 @@
 {
   "endOfLine": "auto",
-  "importOrder": [],
+  "importOrder": ["^@constants(.*)|^@constants/(.*)|^@types(.*)|^@types/(.*)"],
   "importOrderCaseInsensitive": true,
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
