@@ -12,10 +12,17 @@ body?.appendChild(ul);
 
 const ulList: HTMLLIElement[] = [];
 
+const indexAnimationStatusMap: Record<string, 'start' | 'end'> = {};
+
 for (let i = 0; i < ITEMS_COUNT; i++) {
   const li = document.createElement('li');
   li.textContent = `${i}`;
-  li.ontransitionend = () => li.classList.remove('update');
+
+  li.onanimationend = () => {
+    indexAnimationStatusMap[i] = 'end';
+    li.classList.remove('updateUp');
+    li.classList.remove('updateDown');
+  };
 
   ulList.push(li);
 }
@@ -38,38 +45,34 @@ startButton?.addEventListener('click', () => {
 
 stopButton?.addEventListener('click', () => {
   socket.emit('stop');
-  ulList.forEach((li) => li.classList.remove('update'));
+  ulList.forEach((li) => {
+    li.classList.remove('updateUp');
+    li.classList.remove('updateDown');
+  });
 });
 
 /* End Add buttons event listeners for start and stop emitting */
 
-// A thread blocking function
-const blocker = () => {
-  const now = Date.now();
-
-  while (Date.now() - 10 < now) {}
-};
-
 // Socket on "posts" handler
-const update = (id: number) => {
+const update = ({ id, post: { count } }: SocketPayload) => {
   const liToUpdate = ulList.find((_, index) => index === id);
 
-  if (liToUpdate) {
-    liToUpdate?.classList.add('update');
-    blocker();
+  if (liToUpdate && indexAnimationStatusMap[id] === 'end') {
+    indexAnimationStatusMap[id] = 'start';
+
+    const currentCount = parseInt(liToUpdate.dataset.count || '');
+
+    if (count > currentCount) {
+      liToUpdate?.classList.add('updateUp');
+    } else {
+      liToUpdate?.classList.add('updateDown');
+    }
+
+    liToUpdate.dataset.count = `${count}`;
   }
 };
 
-// RAF id
-const rafId: number | null = null;
-
 // Handling socket on "posts" messages
 socket.on('posts', (data: SocketPayload) => {
-  // if (rafId) {
-  //   cancelAnimationFrame(rafId);
-  // }
-
-  // rafId = requestAnimationFrame(() => update(data.id));
-
-  update(data.id);
+  update(data);
 });

@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
       socket.emit('posts', {
         action: 'update',
         id: Math.floor(Math.random() * ITEMS_COUNT),
-        post: 'Post'
+        post: { count: Math.floor(Math.random() * ITEMS_COUNT), data: 'Post' }
       });
     }, EMIT_INTERVAL);
   };
