@@ -33,7 +33,6 @@ io.on('connection', (socket) => {
     }
 
     intervalId = setInterval(() => {
-      console.log('EMIITING');
       socket.emit('posts', {
         action: 'update',
         id: Math.floor(Math.random() * ITEMS_COUNT),
@@ -48,7 +47,6 @@ io.on('connection', (socket) => {
     console.log('Stop');
 
     if (intervalId) {
-      console.log('CLEAR');
       socket.off('posts', onStartListener);
       clearInterval(intervalId);
     }
