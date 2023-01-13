@@ -3,7 +3,8 @@ const path = require('path');
 
 const alias = {
   '@constants': path.resolve(__dirname, 'constants'),
-  '@types': path.resolve(__dirname, 'types')
+  '@types': path.resolve(__dirname, 'types'),
+  '@utils': path.resolve(__dirname, 'utils')
 };
 
 const extensions = ['.ts', '.js'];
